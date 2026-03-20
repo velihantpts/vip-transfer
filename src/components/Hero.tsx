@@ -7,7 +7,7 @@ import type { Dictionary } from "@/dictionaries";
 import { points, distanceKm, estimateMinutes, calculateCustomPrice, airportRoutes, getPoint } from "@/lib/routes";
 import { useCurrency } from "./CurrencyToggle";
 import BookingModal from "./BookingModal";
-import HeroAnimation from "./HeroAnimation";
+// import HeroAnimation from "./HeroAnimation";
 
 interface HeroProps {
   dict: Dictionary;
@@ -79,7 +79,7 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" id="rezervasyon">
+    <section className="relative min-h-[90vh] flex items-center bg-white dark:bg-gray-900" id="rezervasyon">
       <div className="relative z-10 w-full max-w-[980px] mx-auto px-6 pt-20 pb-12">
         <div className="text-center mb-4">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-primary text-sm font-medium mb-4 tracking-wide">
@@ -93,9 +93,6 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
             {dict.hero.subtitle}
           </motion.p>
         </div>
-
-        {/* Lottie Animation */}
-        <HeroAnimation />
 
         {/* Booking card */}
         <motion.div
