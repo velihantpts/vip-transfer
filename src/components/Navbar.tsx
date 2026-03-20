@@ -47,12 +47,15 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="text-xs text-secondary hover:text-text transition-colors">{link.label}</a>
             ))}
-            <button onClick={() => setTrackOpen(true)} className="text-xs text-secondary hover:text-text transition-colors flex items-center gap-1">
-              <Search className="w-3 h-3" />Sorgula
-            </button>
             <ThemeToggle />
             <LanguageSwitcher current={lang} />
-            <a href="#rezervasyon" className="text-xs text-primary hover:text-primary-dark transition-colors font-medium">{dict.nav.bookNow}</a>
+            <button
+              onClick={() => setTrackOpen(true)}
+              className="text-xs bg-primary text-white px-4 py-1.5 rounded-full font-medium hover:bg-primary/90 transition-colors flex items-center gap-1.5"
+            >
+              <Search className="w-3 h-3" />
+              Rezervasyon Sorgula
+            </button>
           </div>
 
           <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-text" aria-label="Menu">
@@ -70,7 +73,13 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
             <div className="pt-2 flex items-center gap-3">
               <LanguageSwitcher current={lang} />
             </div>
-            <a href="#rezervasyon" onClick={() => setMobileOpen(false)} className="block btn-primary px-5 py-2.5 rounded-full text-center text-sm mt-3">{dict.nav.bookNow}</a>
+            <button
+              onClick={() => { setTrackOpen(true); setMobileOpen(false); }}
+              className="w-full btn-primary px-5 py-2.5 rounded-full text-center text-sm mt-3 flex items-center justify-center gap-1.5"
+            >
+              <Search className="w-3.5 h-3.5" />
+              Rezervasyon Sorgula
+            </button>
           </div>
         </motion.div>
       )}

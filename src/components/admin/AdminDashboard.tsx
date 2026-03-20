@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { TrendingUp, Calendar, Users, DollarSign, Car, Settings, BarChart3, UserCircle, LogOut } from "lucide-react";
+import { TrendingUp, Calendar, Users, DollarSign, Car, Settings, BarChart3, UserCircle, LogOut, Truck } from "lucide-react";
 import DashboardTab from "./tabs/DashboardTab";
 import BookingsTab from "./tabs/BookingsTab";
 import DriversTab from "./tabs/DriversTab";
 import CustomersTab from "./tabs/CustomersTab";
+import VehiclesTab from "./tabs/VehiclesTab";
 import PricingTab from "./tabs/PricingTab";
 import ReportsTab from "./tabs/ReportsTab";
 import SettingsTab from "./tabs/SettingsTab";
-type Tab = "dashboard" | "bookings" | "drivers" | "customers" | "pricing" | "reports" | "settings";
+type Tab = "dashboard" | "bookings" | "drivers" | "customers" | "vehicles" | "pricing" | "reports" | "settings";
 
 const tabs = [
   { id: "dashboard" as Tab, label: "Dashboard", icon: TrendingUp },
   { id: "bookings" as Tab, label: "Rezervasyonlar", icon: Calendar },
   { id: "drivers" as Tab, label: "Sürücüler", icon: Car },
   { id: "customers" as Tab, label: "Müşteriler", icon: UserCircle },
+  { id: "vehicles" as Tab, label: "Araçlar", icon: Truck },
   { id: "pricing" as Tab, label: "Fiyatlandırma", icon: DollarSign },
   { id: "reports" as Tab, label: "Raporlar", icon: BarChart3 },
   { id: "settings" as Tab, label: "Ayarlar", icon: Settings },
@@ -78,6 +80,7 @@ export default function AdminDashboard({ onLogout }: { onLogout?: () => void }) 
           {tab === "bookings" && <BookingsTab />}
           {tab === "drivers" && <DriversTab />}
           {tab === "customers" && <CustomersTab />}
+          {tab === "vehicles" && <VehiclesTab />}
           {tab === "pricing" && <PricingTab />}
           {tab === "reports" && <ReportsTab />}
           {tab === "settings" && <SettingsTab />}

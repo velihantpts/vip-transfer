@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, ArrowRight, Route, Plane, MapPin, Repeat } from "lucide-react";
 import { FadeIn } from "./AnimatedSection";
@@ -25,9 +25,23 @@ const allLocations: Location[] = points.map((p) => ({
   lng: p.lng,
 }));
 
-export default function TransferPlanner() {
+interface TransferPlannerProps {
+  selectedRoute?: { from: string; to: string } | null;
+  onRouteConsumed?: () => void;
+}
+
+export default function TransferPlanner({ selectedRoute, onRouteConsumed }: TransferPlannerProps) {
   const [originId, setOriginId] = useState("airport");
   const [selectedDestId, setSelectedDestId] = useState<string | null>(null);
+
+  // When Hero sends a route, apply it
+  useEffect(() => {
+    if (selectedRoute) {
+      if (selectedRoute.from) setOriginId(selectedRoute.from);
+      if (selectedRoute.to) setSelectedDestId(selectedRoute.to);
+      onRouteConsumed?.();
+    }
+  }, [selectedRoute, onRouteConsumed]);
   const [booking, setBooking] = useState(false);
   const { convert, symbol } = useCurrency();
 

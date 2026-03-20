@@ -8,19 +8,21 @@ import { points, distanceKm, estimateMinutes, calculateCustomPrice, airportRoute
 import { useCurrency } from "./CurrencyToggle";
 import BookingModal from "./BookingModal";
 
-export default function Hero({ dict }: { dict: Dictionary }) {
+interface HeroProps {
+  dict: Dictionary;
+  onRouteSelect?: (from: string, to: string) => void;
+}
+
+export default function Hero({ dict, onRouteSelect }: HeroProps) {
   const [fromId, setFromId] = useState("airport");
   const [toId, setToId] = useState("");
   const [booking, setBooking] = useState(false);
   const { convert, symbol } = useCurrency();
 
-  // Calculate price from selection
   const result = useMemo(() => {
     if (!fromId || !toId || fromId === toId) return null;
-    // Check fixed routes first
     const fixed = airportRoutes.find((r) => (r.from === fromId && r.to === toId) || (r.from === toId && r.to === fromId));
     if (fixed) return { km: fixed.km, min: fixed.min, price: fixed.price };
-    // Calculate custom
     const a = getPoint(fromId);
     const b = getPoint(toId);
     if (!a || !b) return null;
@@ -50,11 +52,28 @@ export default function Hero({ dict }: { dict: Dictionary }) {
     );
   };
 
+  const handleGetPrice = () => {
+    if (result) {
+      // Route selected — show booking
+      setBooking(true);
+    } else if (!toId) {
+      // No destination — scroll to planner to show routes
+      onRouteSelect?.(fromId, "");
+    }
+  };
+
+  const handleQuickRoute = (to: string) => {
+    setFromId("airport");
+    setToId(to);
+    // Also notify parent to highlight on map
+    onRouteSelect?.("airport", to);
+  };
+
   const grouped = useMemo(() => {
-    const g: Record<string, typeof points> = { "Havalimanı": [], "Bölgeler": [], "Oteller": [], "Gezilecek Yerler": [] };
+    const g: Record<string, typeof points> = { "Havalimani": [], "Bolgeler": [], "Oteller": [], "Gezilecek Yerler": [] };
     for (const p of points) {
-      if (p.type === "airport") g["Havalimanı"].push(p);
-      else if (p.type === "district") g["Bölgeler"].push(p);
+      if (p.type === "airport") g["Havalimani"].push(p);
+      else if (p.type === "district") g["Bolgeler"].push(p);
       else if (p.type === "hotel") g["Oteller"].push(p);
       else g["Gezilecek Yerler"].push(p);
     }
@@ -131,12 +150,12 @@ export default function Hero({ dict }: { dict: Dictionary }) {
             </div>
           </div>
 
-          {/* Instant price result */}
+          {/* Price result or CTA */}
           <AnimatePresence>
             {result && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
                 <div className="mt-4 p-4 rounded-xl bg-inverse text-inverse-text flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-5 flex-wrap">
                     <div className="flex items-center gap-1.5 text-xs text-inverse-text/50">
                       <Plane className="w-3.5 h-3.5" />
                       {fromPoint?.name} → {toPoint?.name}
@@ -161,14 +180,12 @@ export default function Hero({ dict }: { dict: Dictionary }) {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald inline-block" />
                 {dict.hero.noHiddenFees} · {dict.hero.freeCancel}
               </p>
-              <div className="relative group">
-                <button disabled className="btn-primary px-6 py-2.5 rounded-full flex items-center gap-2 opacity-40 cursor-not-allowed text-sm" aria-label="Fiyat almak için nereden ve nereye seçin">
-                  {dict.hero.getPrice} <ArrowRight className="w-4 h-4" />
-                </button>
-                <span className="absolute bottom-full mb-2 right-0 bg-inverse text-inverse-text text-[10px] px-2.5 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  Nereden ve nereye seçin
-                </span>
-              </div>
+              <button
+                onClick={handleGetPrice}
+                className="btn-primary px-6 py-2.5 rounded-full flex items-center gap-2 text-sm"
+              >
+                {toId ? dict.hero.getPrice : "Rotalari Gor"} <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           )}
         </motion.div>
@@ -177,7 +194,7 @@ export default function Hero({ dict }: { dict: Dictionary }) {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex flex-wrap justify-center gap-2 mt-6 max-w-3xl mx-auto">
           {[
             { to: "belek", label: "Belek" },
-            { to: "kaleici", label: "Kaleiçi" },
+            { to: "kaleici", label: "Kaleici" },
             { to: "kemer", label: "Kemer" },
             { to: "side", label: "Side" },
             { to: "alanya", label: "Alanya" },
@@ -185,14 +202,14 @@ export default function Hero({ dict }: { dict: Dictionary }) {
           ].map((r) => (
             <button
               key={r.to}
-              onClick={() => { setFromId("airport"); setToId(r.to); }}
+              onClick={() => handleQuickRoute(r.to)}
               className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
                 toId === r.to && fromId === "airport"
                   ? "border-primary bg-primary/5 text-primary"
                   : "border-border-light text-secondary hover:border-border hover:text-text"
               }`}
             >
-              Havalimanı → {r.label}
+              Havalimani → {r.label}
             </button>
           ))}
         </motion.div>

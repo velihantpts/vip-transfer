@@ -62,3 +62,75 @@ export async function updateCustomer(id: string, updates: Record<string, unknown
   if (!res.ok) throw new Error("Güncelleme başarısız");
   return res.json();
 }
+
+export async function fetchVehicles() {
+  const res = await fetch("/api/vehicles");
+  if (!res.ok) throw new Error("Araclar yuklenemedi");
+  return res.json();
+}
+
+export async function createVehicle(vehicle: Record<string, unknown>) {
+  const res = await fetch("/api/vehicles", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(vehicle),
+  });
+  if (!res.ok) throw new Error("Arac eklenemedi");
+  return res.json();
+}
+
+export async function updateVehicle(id: string, updates: Record<string, unknown>) {
+  const res = await fetch("/api/vehicles", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, ...updates }),
+  });
+  if (!res.ok) throw new Error("Guncelleme basarisiz");
+  return res.json();
+}
+
+export async function fetchRoutes() {
+  const res = await fetch("/api/routes");
+  if (!res.ok) throw new Error("Rotalar yuklenemedi");
+  return res.json();
+}
+
+export async function createRoute(route: Record<string, unknown>) {
+  const res = await fetch("/api/routes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(route),
+  });
+  if (!res.ok) throw new Error("Rota eklenemedi");
+  return res.json();
+}
+
+export async function updateRoute(id: string, updates: Record<string, unknown>) {
+  const res = await fetch("/api/routes", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, ...updates }),
+  });
+  if (!res.ok) throw new Error("Guncelleme basarisiz");
+  return res.json();
+}
+
+export async function deleteRoute(id: string) {
+  const res = await fetch("/api/routes", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  });
+  if (!res.ok) throw new Error("Silme basarisiz");
+  return res.json();
+}
+
+export async function deleteVehicle(id: string) {
+  const res = await fetch("/api/vehicles", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  });
+  if (!res.ok) throw new Error("Silme basarisiz");
+  return res.json();
+}
