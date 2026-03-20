@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/dictionaries";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
+import TrackBooking from "./TrackBooking";
 
 export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [trackOpen, setTrackOpen] = useState(false);
 
   const navLinks = [
     { href: "#araclar", label: dict.nav.fleet },
@@ -45,6 +47,9 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="text-xs text-secondary hover:text-text transition-colors">{link.label}</a>
             ))}
+            <button onClick={() => setTrackOpen(true)} className="text-xs text-secondary hover:text-text transition-colors flex items-center gap-1">
+              <Search className="w-3 h-3" />Sorgula
+            </button>
             <ThemeToggle />
             <LanguageSwitcher current={lang} />
             <a href="#rezervasyon" className="text-xs text-primary hover:text-primary-dark transition-colors font-medium">{dict.nav.bookNow}</a>
@@ -69,6 +74,7 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
           </div>
         </motion.div>
       )}
+      <TrackBooking open={trackOpen} onClose={() => setTrackOpen(false)} />
     </motion.nav>
   );
 }

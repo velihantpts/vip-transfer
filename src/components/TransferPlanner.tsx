@@ -112,82 +112,77 @@ export default function TransferPlanner() {
             </div>
           </div>
         </FadeIn>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-          {/* Map */}
-          <div className="lg:col-span-3 card overflow-hidden relative" style={{ height: 520 }}>
-            <MapView
-              airport={mapOrigin}
-              destinations={mapDests}
-              selected={selectedDestId}
-              onSelect={(id) => setSelectedDestId(id === selectedDestId ? null : id)}
-            />
+      {/* Full-width map banner */}
+      <div className="relative w-full" style={{ height: 560 }}>
+        <MapView
+          airport={mapOrigin}
+          destinations={mapDests}
+          selected={selectedDestId}
+          onSelect={(id) => setSelectedDestId(id === selectedDestId ? null : id)}
+        />
 
-            <AnimatePresence>
-              {selectedDest && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute bottom-4 left-4 right-4 bg-card-bg/95 backdrop-blur-lg rounded-2xl p-4 border border-card-border shadow-lg"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5 text-[11px] text-secondary mb-1">
-                        <MapPin className="w-3 h-3" />
-                        {origin.name} → {selectedDest.name}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl font-semibold text-text">{symbol}{convert(selectedDest.price)}</span>
-                        <div className="flex items-center gap-2 text-[11px] text-tertiary">
-                          <span className="flex items-center gap-0.5"><Route className="w-3 h-3" />{selectedDest.km} km</span>
-                          <span className="flex items-center gap-0.5"><Clock className="w-3 h-3" />{selectedDest.min} dk</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button onClick={() => setBooking(true)} className="btn-primary px-5 py-2.5 rounded-full text-xs flex items-center gap-1.5 shrink-0">
-                      Rezervasyon <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+        {/* Overlay: selected destination info */}
+        <AnimatePresence>
+          {selectedDest && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute bottom-5 left-1/2 -translate-x-1/2 w-[90%] max-w-lg bg-card-bg/95 backdrop-blur-lg rounded-2xl p-4 border border-card-border shadow-xl z-[500]"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5 text-[11px] text-secondary mb-1">
+                    <MapPin className="w-3 h-3" />
+                    {origin.name} → {selectedDest.name}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Route list */}
-          <div className="lg:col-span-2 space-y-1 max-h-[520px] overflow-y-auto pr-1">
-            <p className="text-[10px] text-tertiary uppercase tracking-wider px-1 mb-2">{origin.name} → </p>
-            {dynamicDestinations.slice(0, 12).map((loc, i) => (
-              <motion.button
-                key={loc.id}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.03 }}
-                onClick={() => setSelectedDestId(loc.id === selectedDestId ? null : loc.id)}
-                className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
-                  selectedDestId === loc.id ? "bg-inverse text-inverse-text shadow-lg" : "hover:bg-surface"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                      selectedDestId === loc.id ? "bg-inverse-text/20 text-inverse-text" : "bg-surface text-secondary"
-                    }`}>
-                      <MapPin className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <p className={`font-medium text-sm ${selectedDestId === loc.id ? "text-inverse-text" : "text-text"}`}>{loc.name}</p>
-                      <div className={`flex items-center gap-3 text-[11px] mt-0.5 ${selectedDestId === loc.id ? "text-inverse-text/50" : "text-tertiary"}`}>
-                        <span>{loc.km} km</span>
-                        <span>{loc.min} dk</span>
-                      </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl font-semibold text-text">{symbol}{convert(selectedDest.price)}</span>
+                    <div className="flex items-center gap-2 text-[11px] text-tertiary">
+                      <span className="flex items-center gap-0.5"><Route className="w-3 h-3" />{selectedDest.km} km</span>
+                      <span className="flex items-center gap-0.5"><Clock className="w-3 h-3" />{selectedDest.min} dk</span>
                     </div>
                   </div>
-                  <p className={`font-semibold text-sm ${selectedDestId === loc.id ? "text-inverse-text" : "text-text"}`}>{symbol}{convert(loc.price)}</p>
                 </div>
-              </motion.button>
-            ))}
-          </div>
+                <button onClick={() => setBooking(true)} className="btn-primary px-5 py-2.5 rounded-full text-xs flex items-center gap-1.5 shrink-0">
+                  Rezervasyon <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Route list below map */}
+      <div className="max-w-[1080px] mx-auto px-6 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+          {dynamicDestinations.slice(0, 12).map((loc, i) => (
+            <motion.button
+              key={loc.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.03 }}
+              onClick={() => setSelectedDestId(loc.id === selectedDestId ? null : loc.id)}
+              className={`text-left px-4 py-3 rounded-xl transition-all border ${
+                selectedDestId === loc.id
+                  ? "bg-inverse text-inverse-text shadow-lg border-transparent"
+                  : "bg-card-bg border-border-light hover:border-border"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div className="min-w-0">
+                  <p className={`font-medium text-sm truncate ${selectedDestId === loc.id ? "text-inverse-text" : "text-text"}`}>{loc.name}</p>
+                  <div className={`flex items-center gap-2 text-[11px] mt-0.5 ${selectedDestId === loc.id ? "text-inverse-text/50" : "text-tertiary"}`}>
+                    <span>{loc.km} km</span>
+                    <span>{loc.min} dk</span>
+                  </div>
+                </div>
+                <p className={`font-semibold text-sm shrink-0 ml-2 ${selectedDestId === loc.id ? "text-inverse-text" : "text-text"}`}>{symbol}{convert(loc.price)}</p>
+              </div>
+            </motion.button>
+          ))}
         </div>
       </div>
 

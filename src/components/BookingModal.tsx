@@ -27,6 +27,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
   const [selectedVehicle, setSelectedVehicle] = useState("eclass");
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", note: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [bookingId, setBookingId] = useState("");
   const [touched, setTouched] = useState({ name: false, phone: false });
   const { convert, symbol } = useCurrency();
 
@@ -39,7 +40,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
 
   const handleSubmit = async () => {
     try {
-      await fetch("/api/bookings", {
+      const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,7 +55,9 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
           note: formData.note,
         }),
       });
-    } catch (e) {
+      const data = await res.json();
+      if (data?.booking_id) setBookingId(data.booking_id);
+    } catch {
       // Fallback: still show success even if API fails
     }
     setSubmitted(true);
@@ -64,6 +67,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
     setStep(1);
     setFormData({ name: "", phone: "", email: "", note: "" });
     setSubmitted(false);
+    setBookingId("");
     setTouched({ name: false, phone: false });
     onClose();
   };
@@ -102,7 +106,13 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                 <Check className="w-7 h-7 text-emerald" />
               </div>
               <h3 className="text-lg font-semibold text-text mb-2">Talebiniz Alındı</h3>
-              <p className="text-sm text-secondary mb-6">En kısa sürede sizinle iletişime geçeceğiz.</p>
+              {bookingId && (
+                <div className="bg-surface rounded-lg px-4 py-2 mb-3 inline-block">
+                  <p className="text-[10px] text-secondary">Rezervasyon No</p>
+                  <p className="text-lg font-mono font-bold text-primary">{bookingId}</p>
+                </div>
+              )}
+              <p className="text-sm text-secondary mb-6">Bu numara ile rezervasyonunuzu sorgulayabilirsiniz.</p>
               <a
                 href={`https://wa.me/905551234567?text=${whatsappMsg}`}
                 target="_blank"

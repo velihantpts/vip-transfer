@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TrendingUp, Calendar, Users, DollarSign, Car, Settings, BarChart3, UserCircle } from "lucide-react";
+import { TrendingUp, Calendar, Users, DollarSign, Car, Settings, BarChart3, UserCircle, LogOut } from "lucide-react";
 import DashboardTab from "./tabs/DashboardTab";
 import BookingsTab from "./tabs/BookingsTab";
 import DriversTab from "./tabs/DriversTab";
@@ -9,13 +9,11 @@ import CustomersTab from "./tabs/CustomersTab";
 import PricingTab from "./tabs/PricingTab";
 import ReportsTab from "./tabs/ReportsTab";
 import SettingsTab from "./tabs/SettingsTab";
-import { mockBookings } from "@/lib/mock-data";
-
 type Tab = "dashboard" | "bookings" | "drivers" | "customers" | "pricing" | "reports" | "settings";
 
 const tabs = [
   { id: "dashboard" as Tab, label: "Dashboard", icon: TrendingUp },
-  { id: "bookings" as Tab, label: "Rezervasyonlar", icon: Calendar, badge: mockBookings.filter((b) => b.status === "new").length },
+  { id: "bookings" as Tab, label: "Rezervasyonlar", icon: Calendar },
   { id: "drivers" as Tab, label: "Sürücüler", icon: Car },
   { id: "customers" as Tab, label: "Müşteriler", icon: UserCircle },
   { id: "pricing" as Tab, label: "Fiyatlandırma", icon: DollarSign },
@@ -23,8 +21,13 @@ const tabs = [
   { id: "settings" as Tab, label: "Ayarlar", icon: Settings },
 ];
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ onLogout }: { onLogout?: () => void }) {
   const [tab, setTab] = useState<Tab>("dashboard");
+
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
+    onLogout?.();
+  };
 
   return (
     <div className="min-h-screen bg-surface">
@@ -48,14 +51,16 @@ export default function AdminDashboard() {
                   <item.icon className="w-3.5 h-3.5" />
                   {item.label}
                 </span>
-                {item.badge ? (
-                  <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${tab === item.id ? "bg-white/20" : "bg-red-100 text-red-600"}`}>
-                    {item.badge}
-                  </span>
-                ) : null}
+                {null}
               </button>
             ))}
           </nav>
+          <div className="mt-auto pt-4 border-t border-border-light">
+            <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-red-500 hover:bg-red-50 transition-colors">
+              <LogOut className="w-3.5 h-3.5" />
+              Çıkış Yap
+            </button>
+          </div>
         </aside>
 
         {/* Content */}
@@ -65,7 +70,6 @@ export default function AdminDashboard() {
             {tabs.map((t) => (
               <button key={t.id} onClick={() => setTab(t.id)} className={`text-[11px] px-3 py-1.5 rounded-full shrink-0 flex items-center gap-1 ${tab === t.id ? "bg-primary text-white" : "bg-card-bg text-secondary border border-border-light"}`}>
                 {t.label}
-                {t.badge ? <span className="bg-red-500 text-white text-[9px] px-1 rounded-full">{t.badge}</span> : null}
               </button>
             ))}
           </div>

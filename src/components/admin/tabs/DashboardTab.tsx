@@ -1,26 +1,63 @@
 "use client";
 
-import { Calendar, Clock, DollarSign, TrendingUp, Users, CheckCircle, XCircle, ArrowRight } from "lucide-react";
-import { mockBookings, mockDrivers, mockActivity, weeklyRevenue, popularRoutes } from "@/lib/mock-data";
+import { useState, useEffect } from "react";
+import { Calendar, Clock, DollarSign, TrendingUp, ArrowRight, Loader2 } from "lucide-react";
+import { fetchBookings, fetchDrivers } from "@/lib/admin-api";
 
-const newCount = mockBookings.filter((b) => b.status === "new").length;
-const todayBookings = mockBookings.filter((b) => b.date === "2026-03-20").length;
-const todayRevenue = mockBookings.filter((b) => b.date === "2026-03-20" && b.status !== "cancelled").reduce((s, b) => s + b.price, 0);
-const monthRevenue = mockBookings.filter((b) => b.status !== "cancelled").reduce((s, b) => s + b.price, 0);
-const completedCount = mockBookings.filter((b) => b.status === "completed").length;
-const availableDrivers = mockDrivers.filter((d) => d.status === "available").length;
-const maxRevenue = Math.max(...weeklyRevenue.map((d) => d.amount));
+interface Booking {
+  id: string;
+  date: string;
+  status: string;
+  price: number;
+  customer_name: string;
+  from_location: string;
+  to_location: string;
+  created_at: string;
+}
 
-const eventIcons: Record<string, string> = {
-  new_booking: "🔵",
-  status_change: "🟡",
-  driver_assigned: "🟣",
-  completed: "🟢",
-  cancelled: "🔴",
-  payment: "💰",
-};
+interface Driver {
+  id: string;
+  name: string;
+  status: string;
+  rating: number;
+}
 
 export default function DashboardTab({ onNavigate }: { onNavigate: (tab: string) => void }) {
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([fetchBookings(), fetchDrivers()])
+      .then(([b, d]) => { setBookings(b); setDrivers(d); })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  const todayBookings = bookings.filter((b) => b.date === today);
+  const newCount = bookings.filter((b) => b.status === "new").length;
+  const todayRevenue = todayBookings.filter((b) => b.status !== "cancelled").reduce((s, b) => s + b.price, 0);
+  const totalRevenue = bookings.filter((b) => b.status !== "cancelled").reduce((s, b) => s + b.price, 0);
+  const availableDrivers = drivers.filter((d) => d.status === "available").length;
+
+  // Recent activity from bookings
+  const recentBookings = [...bookings].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 7);
+
+  // Route stats
+  const routeCounts: Record<string, { count: number; revenue: number }> = {};
+  bookings.filter((b) => b.status !== "cancelled").forEach((b) => {
+    const key = `${b.from_location} → ${b.to_location}`;
+    if (!routeCounts[key]) routeCounts[key] = { count: 0, revenue: 0 };
+    routeCounts[key].count++;
+    routeCounts[key].revenue += b.price;
+  });
+  const popularRoutes = Object.entries(routeCounts).sort((a, b) => b[1].count - a[1].count).slice(0, 5);
+
   return (
     <>
       <h2 className="text-lg font-semibold text-text mb-5">Dashboard</h2>
@@ -28,10 +65,10 @@ export default function DashboardTab({ onNavigate }: { onNavigate: (tab: string)
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         {[
-          { label: "Bugün Transfer", value: todayBookings, icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
+          { label: "Bugun Transfer", value: todayBookings.length, icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
           { label: "Yeni Talep", value: newCount, icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
-          { label: "Bugün Gelir", value: `₺${todayRevenue.toLocaleString()}`, icon: DollarSign, color: "text-green-600", bg: "bg-green-50" },
-          { label: "Toplam Gelir", value: `₺${monthRevenue.toLocaleString()}`, icon: TrendingUp, color: "text-purple-600", bg: "bg-purple-50" },
+          { label: "Bugun Gelir", value: `${todayRevenue.toLocaleString("tr-TR")} TL`, icon: DollarSign, color: "text-green-600", bg: "bg-green-50" },
+          { label: "Toplam Gelir", value: `${totalRevenue.toLocaleString("tr-TR")} TL`, icon: TrendingUp, color: "text-purple-600", bg: "bg-purple-50" },
         ].map((s) => (
           <div key={s.label} className="bg-card-bg border border-border-light rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
@@ -46,84 +83,71 @@ export default function DashboardTab({ onNavigate }: { onNavigate: (tab: string)
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Weekly revenue chart */}
+        {/* Recent bookings */}
         <div className="lg:col-span-2 bg-card-bg border border-border-light rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-text mb-4">Haftalık Gelir</h3>
-          <div className="flex items-end gap-2 h-32">
-            {weeklyRevenue.map((d) => (
-              <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[10px] text-tertiary">₺{(d.amount / 1000).toFixed(0)}k</span>
-                <div className="w-full bg-primary/10 rounded-md overflow-hidden" style={{ height: "100%" }}>
-                  <div className="bg-primary rounded-md w-full transition-all" style={{ height: `${(d.amount / maxRevenue) * 100}%`, marginTop: `${100 - (d.amount / maxRevenue) * 100}%` }} />
-                </div>
-                <span className="text-[10px] text-secondary">{d.day}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Activity timeline */}
-        <div className="bg-card-bg border border-border-light rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-text mb-4">Son Aktiviteler</h3>
-          <div className="space-y-3">
-            {mockActivity.map((e) => (
-              <div key={e.id} className="flex gap-2.5">
-                <span className="text-sm shrink-0 mt-0.5">{eventIcons[e.type]}</span>
-                <div>
-                  <p className="text-xs text-text leading-relaxed">{e.text}</p>
-                  <p className="text-[10px] text-tertiary">{e.time}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-        {/* Popular routes */}
-        <div className="bg-card-bg border border-border-light rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-text">Popüler Rotalar</h3>
-            <button onClick={() => onNavigate("reports")} className="text-[11px] text-primary flex items-center gap-1">Detay <ArrowRight className="w-3 h-3" /></button>
+            <h3 className="text-sm font-semibold text-text">Son Rezervasyonlar</h3>
+            <button onClick={() => onNavigate("bookings")} className="text-[11px] text-primary flex items-center gap-1">Tumunu Gor <ArrowRight className="w-3 h-3" /></button>
           </div>
-          <div className="space-y-2.5">
-            {popularRoutes.map((r, i) => (
-              <div key={r.route} className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-[10px] text-tertiary w-4">{i + 1}.</span>
-                  <span className="text-xs text-text">{r.route}</span>
+          <div className="space-y-2">
+            {recentBookings.map((b) => (
+              <div key={b.id} className="flex items-center justify-between text-xs py-2 border-b border-border-light last:border-0">
+                <div>
+                  <p className="text-text font-medium">{b.customer_name}</p>
+                  <p className="text-tertiary">{b.from_location} → {b.to_location}</p>
                 </div>
-                <div className="flex items-center gap-3 text-xs">
-                  <span className="text-secondary">{r.count} trip</span>
-                  <span className="text-text font-medium">₺{(r.revenue / 1000).toFixed(0)}k</span>
+                <div className="text-right">
+                  <p className="text-text font-medium">{b.price.toLocaleString("tr-TR")} TL</p>
+                  <p className="text-tertiary">{b.date}</p>
                 </div>
               </div>
             ))}
+            {recentBookings.length === 0 && <p className="text-xs text-tertiary text-center py-4">Henuz rezervasyon yok.</p>}
           </div>
         </div>
 
         {/* Driver status */}
         <div className="bg-card-bg border border-border-light rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-text">Sürücü Durumu</h3>
-            <button onClick={() => onNavigate("drivers")} className="text-[11px] text-primary flex items-center gap-1">Tümü <ArrowRight className="w-3 h-3" /></button>
+            <h3 className="text-sm font-semibold text-text">Surucu Durumu</h3>
+            <button onClick={() => onNavigate("drivers")} className="text-[11px] text-primary flex items-center gap-1">Tumu <ArrowRight className="w-3 h-3" /></button>
           </div>
           <div className="grid grid-cols-3 gap-3 mb-4">
-            <div className="text-center p-2 rounded-lg bg-green-50"><p className="text-lg font-semibold text-green-700">{availableDrivers}</p><p className="text-[10px] text-green-600">Müsait</p></div>
-            <div className="text-center p-2 rounded-lg bg-blue-50"><p className="text-lg font-semibold text-blue-700">{mockDrivers.filter((d) => d.status === "on-trip").length}</p><p className="text-[10px] text-blue-600">Yolda</p></div>
-            <div className="text-center p-2 rounded-lg bg-gray-50"><p className="text-lg font-semibold text-gray-600">{mockDrivers.filter((d) => d.status === "off-duty").length}</p><p className="text-[10px] text-gray-500">İzinli</p></div>
+            <div className="text-center p-2 rounded-lg bg-green-50"><p className="text-lg font-semibold text-green-700">{availableDrivers}</p><p className="text-[10px] text-green-600">Musait</p></div>
+            <div className="text-center p-2 rounded-lg bg-blue-50"><p className="text-lg font-semibold text-blue-700">{drivers.filter((d) => d.status === "on_trip").length}</p><p className="text-[10px] text-blue-600">Yolda</p></div>
+            <div className="text-center p-2 rounded-lg bg-gray-50"><p className="text-lg font-semibold text-gray-600">{drivers.filter((d) => d.status === "off_duty").length}</p><p className="text-[10px] text-gray-500">Izinli</p></div>
           </div>
-          {mockDrivers.slice(0, 3).map((d) => (
+          {drivers.slice(0, 5).map((d) => (
             <div key={d.id} className="flex items-center justify-between py-1.5 text-xs">
               <span className="text-text">{d.name}</span>
-              <span className={d.status === "available" ? "text-green-600" : d.status === "on-trip" ? "text-blue-600" : "text-gray-500"}>
-                {d.status === "available" ? "Müsait" : d.status === "on-trip" ? "Yolda" : "İzinli"}
+              <span className={d.status === "available" ? "text-green-600" : d.status === "on_trip" ? "text-blue-600" : "text-gray-500"}>
+                {d.status === "available" ? "Musait" : d.status === "on_trip" ? "Yolda" : "Izinli"}
               </span>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Popular routes */}
+      {popularRoutes.length > 0 && (
+        <div className="mt-5 bg-card-bg border border-border-light rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-text mb-4">Populer Rotalar</h3>
+          <div className="space-y-2.5">
+            {popularRoutes.map(([route, data], i) => (
+              <div key={route} className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[10px] text-tertiary w-4">{i + 1}.</span>
+                  <span className="text-xs text-text">{route}</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="text-secondary">{data.count} trip</span>
+                  <span className="text-text font-medium">{(data.revenue / 1000).toFixed(0)}k TL</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
