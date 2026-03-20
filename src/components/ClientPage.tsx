@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 import Hero from "./Hero";
 import SocialProof from "./SocialProof";
 import HowItWorks from "./HowItWorks";
-import WhyUs from "./WhyUs";
+// WhyUs merged into HowItWorks (Dieter Rams)
 import Fleet from "./Fleet";
 import TransferPlanner from "./TransferPlanner";
 import CtaBanner from "./CtaBanner";
@@ -35,7 +35,6 @@ export default function ClientPage({ dict, lang }: { dict: Dictionary; lang: Loc
         <Hero dict={dict} onRouteSelect={handleRouteSelect} />
         <SocialProof />
         <HowItWorks dict={dict} />
-        <WhyUs />
         <Fleet dict={dict} />
         <TransferPlanner selectedRoute={selectedRoute} onRouteConsumed={() => setSelectedRoute(null)} />
         <CtaBanner />

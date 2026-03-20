@@ -54,10 +54,8 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
 
   const handleGetPrice = () => {
     if (result) {
-      // Route selected — show booking
       setBooking(true);
     } else if (!toId) {
-      // No destination — scroll to planner to show routes
       onRouteSelect?.(fromId, "");
     }
   };
@@ -65,7 +63,6 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
   const handleQuickRoute = (to: string) => {
     setFromId("airport");
     setToId(to);
-    // Also notify parent to highlight on map
     onRouteSelect?.("airport", to);
   };
 
@@ -81,29 +78,50 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
   }, []);
 
   return (
-    <section className="pt-20 pb-12 sm:pt-28 sm:pb-20" id="rezervasyon">
-      <div className="max-w-[980px] mx-auto px-6">
-        <div className="text-center mb-12">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-primary text-sm font-medium mb-4">
+    <section className="relative min-h-[92vh] flex items-center" id="rezervasyon">
+      {/* Background image + overlay */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop&q=80')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        {/* Amber glow at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-amber-900/20 to-transparent" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-[980px] mx-auto px-6 py-24 sm:py-32">
+        <div className="text-center mb-10">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-amber-400 text-sm font-medium mb-4 tracking-wider uppercase">
             {dict.hero.badge}
           </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text leading-[1.08] mb-6">
-            {dict.hero.titleLine1} <span className="text-secondary">{dict.hero.titleHighlight}</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.08] mb-6"
+          >
+            {dict.hero.titleLine1} <span className="text-amber-400">{dict.hero.titleHighlight}</span>
             {dict.hero.titleLine2 && <><br />{dict.hero.titleLine2}</>}
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-lg text-secondary max-w-xl mx-auto leading-relaxed">
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
             {dict.hero.subtitle}
           </motion.p>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="card p-6 max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 max-w-3xl mx-auto shadow-2xl"
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
             {/* From */}
             <div>
-              <label className="text-[11px] text-tertiary uppercase tracking-wider mb-1.5 block">{dict.hero.from}</label>
+              <label className="text-[11px] text-white/50 uppercase tracking-wider mb-1.5 block">{dict.hero.from}</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-tertiary" />
-                <select value={fromId} onChange={(e) => setFromId(e.target.value)} className="w-full bg-surface border-none rounded-lg pl-9 pr-9 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20">
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <select value={fromId} onChange={(e) => setFromId(e.target.value)} className="w-full bg-white/10 border border-white/10 rounded-xl pl-9 pr-9 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400/30 [&>option]:text-gray-900 [&>optgroup]:text-gray-900">
                   <option value="">{dict.hero.selectLocation}</option>
                   {Object.entries(grouped).map(([group, pts]) => (
                     <optgroup key={group} label={group}>
@@ -111,17 +129,17 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
                     </optgroup>
                   ))}
                 </select>
-                <button onClick={handleGeolocation} className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-md flex items-center justify-center text-tertiary hover:text-primary transition-colors" title="Konumumu kullan">
+                <button onClick={handleGeolocation} className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg flex items-center justify-center text-white/40 hover:text-amber-400 hover:bg-white/10 transition-all" title="Konumumu kullan">
                   <LocateFixed className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
             {/* To */}
             <div>
-              <label className="text-[11px] text-tertiary uppercase tracking-wider mb-1.5 block">{dict.hero.to}</label>
+              <label className="text-[11px] text-white/50 uppercase tracking-wider mb-1.5 block">{dict.hero.to}</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-tertiary" />
-                <select value={toId} onChange={(e) => setToId(e.target.value)} className="w-full bg-surface border-none rounded-lg pl-9 pr-4 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20">
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <select value={toId} onChange={(e) => setToId(e.target.value)} className="w-full bg-white/10 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400/30 [&>option]:text-gray-900 [&>optgroup]:text-gray-900">
                   <option value="">{dict.hero.selectLocation}</option>
                   {Object.entries(grouped).map(([group, pts]) => (
                     <optgroup key={group} label={group}>
@@ -135,38 +153,38 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] text-tertiary uppercase tracking-wider mb-1.5 block">{dict.hero.date}</label>
+              <label className="text-[11px] text-white/50 uppercase tracking-wider mb-1.5 block">{dict.hero.date}</label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-tertiary" />
-                <input type="date" defaultValue={new Date().toISOString().split("T")[0]} className="w-full bg-surface border-none rounded-lg pl-9 pr-3 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <input type="date" defaultValue={new Date().toISOString().split("T")[0]} className="w-full bg-white/10 border border-white/10 rounded-xl pl-9 pr-3 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400/30 [color-scheme:dark]" />
               </div>
             </div>
             <div>
-              <label className="text-[11px] text-tertiary uppercase tracking-wider mb-1.5 block">{dict.hero.time}</label>
+              <label className="text-[11px] text-white/50 uppercase tracking-wider mb-1.5 block">{dict.hero.time}</label>
               <div className="relative">
-                <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-tertiary" />
-                <input type="time" defaultValue={new Date().toTimeString().slice(0, 5)} className="w-full bg-surface border-none rounded-lg pl-9 pr-3 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <input type="time" defaultValue={new Date().toTimeString().slice(0, 5)} className="w-full bg-white/10 border border-white/10 rounded-xl pl-9 pr-3 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-400/30 [color-scheme:dark]" />
               </div>
             </div>
           </div>
 
-          {/* Price result or CTA */}
+          {/* Price result */}
           <AnimatePresence>
             {result && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                <div className="mt-4 p-4 rounded-xl bg-inverse text-inverse-text flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="mt-4 p-4 rounded-xl bg-amber-400/10 border border-amber-400/20 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-5 flex-wrap">
-                    <div className="flex items-center gap-1.5 text-xs text-inverse-text/50">
+                    <div className="flex items-center gap-1.5 text-xs text-white/50">
                       <Plane className="w-3.5 h-3.5" />
                       {fromPoint?.name} → {toPoint?.name}
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="flex items-center gap-1 text-xs text-inverse-text/50"><Route className="w-3 h-3" />{result.km} km</span>
-                      <span className="flex items-center gap-1 text-xs text-inverse-text/50"><Clock className="w-3 h-3" />~{result.min} dk</span>
+                      <span className="flex items-center gap-1 text-xs text-white/50"><Route className="w-3 h-3" />{result.km} km</span>
+                      <span className="flex items-center gap-1 text-xs text-white/50"><Clock className="w-3 h-3" />~{result.min} dk</span>
                     </div>
-                    <span className="text-xl font-semibold">{symbol}{convert(result.price)}</span>
+                    <span className="text-2xl font-bold text-amber-400">{symbol}{convert(result.price)}</span>
                   </div>
-                  <button onClick={() => setBooking(true)} className="bg-base text-text font-medium text-sm px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity flex items-center gap-2 shrink-0">
+                  <button onClick={() => setBooking(true)} className="bg-amber-400 text-gray-900 font-semibold text-sm px-6 py-3 rounded-full hover:bg-amber-300 transition-all hover:shadow-lg hover:shadow-amber-400/25 flex items-center gap-2 shrink-0">
                     Rezervasyon <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -176,13 +194,13 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
 
           {!result && (
             <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-xs text-tertiary flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald inline-block" />
+              <p className="text-xs text-white/40 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                 {dict.hero.noHiddenFees} · {dict.hero.freeCancel}
               </p>
               <button
                 onClick={handleGetPrice}
-                className="btn-primary px-6 py-2.5 rounded-full flex items-center gap-2 text-sm"
+                className="bg-amber-400 text-gray-900 font-semibold text-sm px-6 py-3 rounded-full hover:bg-amber-300 transition-all hover:shadow-lg hover:shadow-amber-400/25 flex items-center gap-2"
               >
                 {toId ? dict.hero.getPrice : "Rotalari Gor"} <ArrowRight className="w-4 h-4" />
               </button>
@@ -203,10 +221,10 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
             <button
               key={r.to}
               onClick={() => handleQuickRoute(r.to)}
-              className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+              className={`text-xs px-3.5 py-1.5 rounded-full border backdrop-blur-sm transition-all ${
                 toId === r.to && fromId === "airport"
-                  ? "border-primary bg-primary/5 text-primary"
-                  : "border-border-light text-secondary hover:border-border hover:text-text"
+                  ? "border-amber-400/50 bg-amber-400/20 text-amber-400"
+                  : "border-white/20 text-white/60 hover:border-white/40 hover:text-white hover:bg-white/5"
               }`}
             >
               Havalimani → {r.label}

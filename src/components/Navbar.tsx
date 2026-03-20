@@ -51,7 +51,7 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
             <LanguageSwitcher current={lang} />
             <button
               onClick={() => setTrackOpen(true)}
-              className="text-xs bg-primary text-white px-4 py-1.5 rounded-full font-medium hover:bg-primary/90 transition-colors flex items-center gap-1.5"
+              className="text-xs bg-amber-400 text-gray-900 px-4 py-1.5 rounded-full font-semibold hover:bg-amber-300 transition-all hover:shadow-md hover:shadow-amber-400/25 flex items-center gap-1.5"
             >
               <Search className="w-3 h-3" />
               Rezervasyon Sorgula
@@ -75,7 +75,7 @@ export default function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale 
             </div>
             <button
               onClick={() => { setTrackOpen(true); setMobileOpen(false); }}
-              className="w-full btn-primary px-5 py-2.5 rounded-full text-center text-sm mt-3 flex items-center justify-center gap-1.5"
+              className="w-full bg-amber-400 text-gray-900 font-semibold px-5 py-2.5 rounded-full text-center text-sm mt-3 flex items-center justify-center gap-1.5 hover:bg-amber-300 transition-colors"
             >
               <Search className="w-3.5 h-3.5" />
               Rezervasyon Sorgula
