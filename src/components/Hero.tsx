@@ -79,7 +79,7 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-white dark:bg-gray-900" id="rezervasyon">
+    <section className="relative min-h-[90vh] flex items-center bg-base" id="rezervasyon">
       <div className="relative z-10 w-full max-w-[980px] mx-auto px-6 pt-20 pb-12">
         <div className="text-center mb-4">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-primary text-sm font-medium mb-4 tracking-wide">
