@@ -61,7 +61,7 @@ export default function AdminDashboard({ onLogout }: { onLogout?: () => void }) 
                 onClick={() => setTab(item.id)}
                 className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${
                   tab === item.id
-                    ? "bg-amber-400 text-gray-900 shadow-sm shadow-amber-400/25"
+                    ? "bg-primary text-white"
                     : "text-secondary hover:bg-surface hover:text-text"
                 }`}
               >
@@ -83,7 +83,7 @@ export default function AdminDashboard({ onLogout }: { onLogout?: () => void }) 
           {/* Mobile tabs */}
           <div className="flex gap-1.5 mb-6 md:hidden overflow-x-auto pb-2">
             {tabs.map((t) => (
-              <button key={t.id} onClick={() => setTab(t.id)} className={`text-[11px] px-3 py-1.5 rounded-full shrink-0 font-medium transition-all ${tab === t.id ? "bg-amber-400 text-gray-900 shadow-sm" : "bg-card-bg text-secondary border border-border-light"}`}>
+              <button key={t.id} onClick={() => setTab(t.id)} className={`text-[11px] px-3 py-1.5 rounded-full shrink-0 font-medium transition-all ${tab === t.id ? "bg-primary text-white" : "bg-card-bg text-secondary border border-border-light"}`}>
                 {t.label}
               </button>
             ))}

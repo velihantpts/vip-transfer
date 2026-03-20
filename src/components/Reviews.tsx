@@ -7,7 +7,7 @@ import type { Dictionary } from "@/dictionaries";
 
 export default function Reviews({ dict }: { dict: Dictionary }) {
   return (
-    <section id="yorumlar" className="py-24 bg-surface">
+    <section id="yorumlar" className="py-24 bg-base">
       <div className="max-w-[980px] mx-auto px-6">
         <FadeIn className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-semibold text-text tracking-tight">

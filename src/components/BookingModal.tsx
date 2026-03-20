@@ -122,7 +122,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                   <div className="flex items-center gap-2 flex-1">
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
                       step > s.num ? "bg-emerald-500 text-white" :
-                      step === s.num ? "bg-amber-400 text-gray-900" :
+                      step === s.num ? "bg-primary text-white" :
                       "bg-gray-100 text-gray-400"
                     }`}>
                       {step > s.num ? <Check className="w-3 h-3" /> : s.num}
@@ -151,7 +151,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                   <div className="bg-gray-50 rounded-xl px-5 py-3 mb-4 inline-flex items-center gap-3">
                     <div className="text-left">
                       <p className="text-[10px] text-gray-400">Rezervasyon No</p>
-                      <p className="text-xl font-mono font-bold text-amber-500">{bookingId}</p>
+                      <p className="text-xl font-mono font-bold text-primary">{bookingId}</p>
                     </div>
                     <button
                       onClick={copyBookingId}
@@ -196,10 +196,10 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                       key={v.id}
                       onClick={() => setSelectedVehicle(v.id)}
                       className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
-                        selectedVehicle === v.id ? "border-amber-400 bg-amber-50/50 shadow-sm" : "border-gray-100 hover:border-gray-200"
+                        selectedVehicle === v.id ? "border-primary/30 bg-primary/5 shadow-sm" : "border-gray-100 hover:border-gray-200"
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selectedVehicle === v.id ? "bg-amber-400 text-gray-900" : "bg-gray-100 text-gray-400"}`}>
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selectedVehicle === v.id ? "bg-primary text-white" : "bg-gray-100 text-gray-400"}`}>
                         <Users className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -209,7 +209,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                           <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />{v.bags}</span>
                         </div>
                       </div>
-                      <p className={`font-bold text-lg ${selectedVehicle === v.id ? "text-amber-500" : "text-gray-900"}`}>{symbol}{convert(Math.round(price * v.multiplier))}</p>
+                      <p className={`font-bold text-lg ${selectedVehicle === v.id ? "text-primary" : "text-gray-900"}`}>{symbol}{convert(Math.round(price * v.multiplier))}</p>
                     </button>
                   ))}
                 </div>
@@ -227,19 +227,19 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                 <div className="space-y-3">
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                    <input type="text" placeholder="Ad Soyad *" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} onBlur={() => setTouched({ ...touched, name: true })} className={`w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 border-2 ${touched.name && !formData.name ? "border-red-300" : "border-transparent"}`} />
+                    <input type="text" placeholder="Ad Soyad *" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} onBlur={() => setTouched({ ...touched, name: true })} className={`w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 border-2 ${touched.name && !formData.name ? "border-red-300" : "border-transparent"}`} />
                     {touched.name && !formData.name && <p className="text-[10px] text-red-500 mt-1 ml-1">Isim zorunludur</p>}
                   </div>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                    <input type="tel" placeholder="Telefon *" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} onBlur={() => setTouched({ ...touched, phone: true })} className={`w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 border-2 ${touched.phone && !formData.phone ? "border-red-300" : "border-transparent"}`} />
+                    <input type="tel" placeholder="Telefon *" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} onBlur={() => setTouched({ ...touched, phone: true })} className={`w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 border-2 ${touched.phone && !formData.phone ? "border-red-300" : "border-transparent"}`} />
                     {touched.phone && !formData.phone && <p className="text-[10px] text-red-500 mt-1 ml-1">Telefon zorunludur</p>}
                   </div>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
-                    <input type="email" placeholder="E-posta (opsiyonel)" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 border-2 border-transparent" />
+                    <input type="email" placeholder="E-posta (opsiyonel)" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full bg-gray-50 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 border-2 border-transparent" />
                   </div>
-                  <textarea placeholder="Not (ucus no, ozel istek vb.)" value={formData.note} onChange={(e) => setFormData({ ...formData, note: e.target.value })} rows={2} className="w-full bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 resize-none border-2 border-transparent" />
+                  <textarea placeholder="Not (ucus no, ozel istek vb.)" value={formData.note} onChange={(e) => setFormData({ ...formData, note: e.target.value })} rows={2} className="w-full bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none border-2 border-transparent" />
                 </div>
 
                 <div className="mt-4 p-3 rounded-xl bg-gray-50 text-xs text-gray-500">
@@ -250,7 +250,7 @@ export default function BookingModal({ open, onClose, from, to, km, min, price }
                 <button
                   onClick={handleSubmit}
                   disabled={!formData.name || !formData.phone}
-                  className="w-full bg-amber-400 text-gray-900 py-3.5 rounded-full text-sm font-semibold mt-4 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-amber-300 transition-all hover:shadow-lg hover:shadow-amber-400/25"
+                  className="w-full bg-primary text-white py-3.5 rounded-full text-sm font-semibold mt-4 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary/90 transition-colors"
                 >
                   Rezervasyon Talebi Gonder
                 </button>

@@ -49,6 +49,7 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: Locale 
           <div className="flex items-center gap-5 text-[11px] text-tertiary">
             <a href="#" className="hover:text-text transition-colors">{dict.footer.privacy}</a>
             <a href="#" className="hover:text-text transition-colors">{dict.footer.terms}</a>
+            <Link href={`/${lang}/admin`} className="hover:text-text transition-colors">Admin</Link>
           </div>
         </div>
       </div>
