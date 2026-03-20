@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "fleet": "Araçlarımız",
+    "routes": "Rotalar",
+    "howItWorks": "Nasıl Çalışır",
+    "reviews": "Yorumlar",
+    "faq": "SSS",
+    "contact": "İletişim",
+    "bookNow": "Rezervasyon Yap",
+    "phone": "+90 555 123 45 67"
+  },
+  "hero": {
+    "badge": "Premium Transfer Hizmeti",
+    "titleLine1": "Antalya'da",
+    "titleHighlight": "VIP Transfer",
+    "titleLine2": "Deneyimi",
+    "subtitle": "Havalimanından otelinize, otelinizden her yere. Lüks araçlar, profesyonel sürücüler, zamanında hizmet.",
+    "from": "Nereden",
+    "to": "Nereye",
+    "date": "Tarih",
+    "time": "Saat",
+    "selectLocation": "Konum seçin",
+    "getPrice": "Fiyat Al",
+    "noHiddenFees": "Gizli ücret yok",
+    "freeCancel": "Ücretsiz iptal"
+  },
+  "locations": [
+    "Antalya Havalimanı", "Kaleiçi", "Belek", "Kemer", "Side",
+    "Alanya", "Lara", "Kundu", "Kaş", "Olympos", "Konyaaltı", "Manavgat"
+  ],
+  "trust": {
+    "rating": "Google Puan",
+    "transfers": "Tamamlanan Transfer",
+    "service": "Hizmet",
+    "safe": "Güvenli Yolculuk"
+  },
+  "howItWorks": {
+    "badge": "Kolay Rezervasyon",
+    "title": "Nasıl",
+    "titleHighlight": "Çalışır",
+    "step1Title": "Rota Seçin",
+    "step1Desc": "Nereden alınmak ve nereye gitmek istediğinizi belirleyin.",
+    "step2Title": "Araç Seçin",
+    "step2Desc": "İhtiyacınıza uygun lüks aracınızı seçin.",
+    "step3Title": "Yolculuğun Keyfini Çıkarın",
+    "step3Desc": "Profesyonel sürücümüz sizi zamanında karşılar."
+  },
+  "fleet": {
+    "badge": "Lüks Filo",
+    "title": "Araç",
+    "titleHighlight": "Filomuz",
+    "subtitle": "Tüm araçlarımız düzenli bakımlı, sigortalı ve profesyonel sürücülerimiz tarafından kullanılmaktadır.",
+    "popular": "Popüler",
+    "startingFrom": "Başlangıç fiyatı",
+    "passengers": "Yolcu",
+    "luggage": "Bavul"
+  },
+  "vehicles": [
+    { "name": "Mercedes V-Class", "type": "VIP Minivan", "passengers": "1-7", "luggage": "7", "features": ["Wi-Fi", "Klima", "USB Şarj", "Su & İçecek"], "price": 850, "popular": true },
+    { "name": "Mercedes S-Class", "type": "Lüks Sedan", "passengers": "1-3", "luggage": "3", "features": ["Wi-Fi", "Deri Koltuk", "Klima", "Minibar"], "price": 1200, "popular": false },
+    { "name": "Mercedes Sprinter VIP", "type": "VIP Minibüs", "passengers": "1-12", "luggage": "12", "features": ["Wi-Fi", "TV", "Klima", "Buzdolabı"], "price": 1500, "popular": false },
+    { "name": "Mercedes E-Class", "type": "Business Sedan", "passengers": "1-3", "luggage": "3", "features": ["Wi-Fi", "Klima", "USB Şarj", "Su"], "price": 650, "popular": false }
+  ],
+  "routes": {
+    "badge": "Sabit Fiyatlar",
+    "title": "Popüler",
+    "titleHighlight": "Rotalar",
+    "subtitle": "Tüm fiyatlarımız sabittir. Trafik veya bekleme ücreti yoktur.",
+    "startingFrom": "Başlangıç"
+  },
+  "routeList": [
+    { "from": "Antalya Havalimanı", "to": "Kaleiçi", "distance": "15 km", "duration": "20 dk", "price": 650 },
+    { "from": "Antalya Havalimanı", "to": "Belek", "distance": "35 km", "duration": "30 dk", "price": 850 },
+    { "from": "Antalya Havalimanı", "to": "Kemer", "distance": "60 km", "duration": "50 dk", "price": 1100 },
+    { "from": "Antalya Havalimanı", "to": "Side", "distance": "75 km", "duration": "60 dk", "price": 1300 },
+    { "from": "Antalya Havalimanı", "to": "Alanya", "distance": "130 km", "duration": "90 dk", "price": 1800 },
+    { "from": "Antalya Havalimanı", "to": "Kaş", "distance": "190 km", "duration": "150 dk", "price": 2500 },
+    { "from": "Antalya Havalimanı", "to": "Lara", "distance": "12 km", "duration": "15 dk", "price": 550 },
+    { "from": "Antalya Havalimanı", "to": "Kundu", "distance": "18 km", "duration": "20 dk", "price": 650 }
+  ],
+  "reviews": {
+    "badge": "Müşteri Memnuniyeti",
+    "title": "Misafirlerimiz Ne",
+    "titleHighlight": "Diyor"
+  },
+  "reviewList": [
+    { "name": "Michael Schmidt", "country": "Almanya", "text": "Harika bir deneyimdi. Şoför zamanında geldi, araç tertemizdi ve çok konforluydu. Kesinlikle tekrar tercih edeceğim.", "source": "Google" },
+    { "name": "Elena Petrova", "country": "Rusya", "text": "Çok konforlu bir transfer. Sürücü bizi tabelayla karşıladı, bavullarımıza yardımcı oldu. Tavsiye ederim!", "source": "Tripadvisor" },
+    { "name": "James Wilson", "country": "İngiltere", "text": "Antalya'daki en iyi havalimanı transfer hizmeti. Temiz Mercedes V-Class, profesyonel sürücü, adil fiyat.", "source": "Google" },
+    { "name": "Ayşe Demir", "country": "Türkiye", "text": "Ailece Belek'e gittik. V-Class çok rahat, çocuk koltuğu da sağladılar. Fiyat/performans mükemmel.", "source": "Google" },
+    { "name": "Hans Müller", "country": "Avusturya", "text": "Dakik, temiz ve profesyonel. Sürücü çok dostaneydi. Kesinlikle tavsiye ederim!", "source": "Tripadvisor" },
+    { "name": "Sophie Martin", "country": "Fransa", "text": "Baştan sona kusursuz hizmet. Şoför zamanındaydı ve çok yardımseverdi. Kesinlikle tavsiye ederim!", "source": "Google" }
+  ],
+  "faq": {
+    "badge": "Sorularınız",
+    "title": "Sıkça Sorulan",
+    "titleHighlight": "Sorular"
+  },
+  "faqList": [
+    { "q": "Havalimanında beni nasıl karşılıyorsunuz?", "a": "Sürücümüz, isminizin yazılı olduğu bir tabelayla varış kapısında sizi karşılar. Uçuşunuz takip edilir, gecikme durumunda ücretsiz bekleme sağlanır." },
+    { "q": "Fiyatlara gizli ücret dahil mi?", "a": "Hayır. Tüm fiyatlarımız sabittir ve yakıt, otopark, KDV dahildir. Trafik sıkışıklığı veya bekleme ücreti alınmaz." },
+    { "q": "Ücretsiz iptal mümkün mü?", "a": "Evet. Transfer saatinden 24 saat öncesine kadar ücretsiz iptal edebilirsiniz." },
+    { "q": "Çocuk koltuğu sağlıyor musunuz?", "a": "Evet. Rezervasyon sırasında belirtmeniz yeterli. 0-12 yaş arası için uygun çocuk koltuğu ücretsiz olarak sağlanır." },
+    { "q": "Ödeme nasıl yapılır?", "a": "Kredi kartı, nakit (TL, EUR, USD, GBP) veya online ödeme kabul edilmektedir. Araç içinde POS cihazı mevcuttur." },
+    { "q": "Gece geç saatlerde transfer yapıyor musunuz?", "a": "Evet, 7/24 hizmet veriyoruz. Gece veya sabah erken saatlerde ek ücret alınmaz." },
+    { "q": "Kaç kişilik araçlarınız var?", "a": "1-3 kişilik sedan, 1-7 kişilik VIP minivan ve 1-12 kişilik VIP minibüs seçeneklerimiz mevcuttur." }
+  ],
+  "footer": {
+    "desc": "Antalya'nın en güvenilir VIP transfer hizmeti. Lüks araçlar, profesyonel sürücüler, sabit fiyatlar.",
+    "licensed": "Lisanslı Turizm Transfer Firması",
+    "quickLinks": "Hızlı Linkler",
+    "popularRoutes": "Popüler Rotalar",
+    "contactTitle": "İletişim",
+    "copyright": "© 2026 Antalya VIP Transfer. Tüm hakları saklıdır.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Şartları"
+  },
+  "mobile": {
+    "startingFrom": "Başlangıç fiyatı",
+    "bookNow": "Hemen Rezerve Et"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "fleet": "Fahrzeuge",
+    "routes": "Routen",
+    "howItWorks": "So funktioniert's",
+    "reviews": "Bewertungen",
+    "faq": "FAQ",
+    "contact": "Kontakt",
+    "bookNow": "Jetzt buchen",
+    "phone": "+90 555 123 45 67"
+  },
+  "hero": {
+    "badge": "Premium Transfer Service",
+    "titleLine1": "VIP Transfer",
+    "titleHighlight": "Erlebnis",
+    "titleLine2": "in Antalya",
+    "subtitle": "Vom Flughafen zu Ihrem Hotel, von Ihrem Hotel überall hin. Luxusfahrzeuge, professionelle Fahrer, pünktlicher Service.",
+    "from": "Von",
+    "to": "Nach",
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "selectLocation": "Ort wählen",
+    "getPrice": "Preis anfragen",
+    "noHiddenFees": "Keine versteckten Gebühren",
+    "freeCancel": "Kostenlose Stornierung"
+  },
+  "locations": [
+    "Flughafen Antalya", "Kaleiçi (Altstadt)", "Belek", "Kemer", "Side",
+    "Alanya", "Lara", "Kundu", "Kaş", "Olympos", "Konyaaltı", "Manavgat"
+  ],
+  "trust": {
+    "rating": "Google Bewertung",
+    "transfers": "Abgeschlossene Transfers",
+    "service": "Service",
+    "safe": "Sichere Fahrten"
+  },
+  "howItWorks": {
+    "badge": "Einfache Buchung",
+    "title": "So",
+    "titleHighlight": "funktioniert's",
+    "step1Title": "Route wählen",
+    "step1Desc": "Wählen Sie Ihren Abhol- und Zielort.",
+    "step2Title": "Fahrzeug wählen",
+    "step2Desc": "Wählen Sie das Luxusfahrzeug, das Ihren Bedürfnissen entspricht.",
+    "step3Title": "Genießen Sie die Fahrt",
+    "step3Desc": "Unser professioneller Fahrer empfängt Sie pünktlich."
+  },
+  "fleet": {
+    "badge": "Luxus-Flotte",
+    "title": "Unsere",
+    "titleHighlight": "Flotte",
+    "subtitle": "Alle unsere Fahrzeuge werden regelmäßig gewartet, sind versichert und werden von unseren professionellen Fahrern gefahren.",
+    "popular": "Beliebt",
+    "startingFrom": "Ab",
+    "passengers": "Passagiere",
+    "luggage": "Gepäck"
+  },
+  "vehicles": [
+    { "name": "Mercedes V-Klasse", "type": "VIP Minivan", "passengers": "1-7", "luggage": "7", "features": ["WLAN", "Klima", "USB-Ladung", "Wasser & Getränke"], "price": 850, "popular": true },
+    { "name": "Mercedes S-Klasse", "type": "Luxus-Limousine", "passengers": "1-3", "luggage": "3", "features": ["WLAN", "Ledersitze", "Klima", "Minibar"], "price": 1200, "popular": false },
+    { "name": "Mercedes Sprinter VIP", "type": "VIP Kleinbus", "passengers": "1-12", "luggage": "12", "features": ["WLAN", "TV", "Klima", "Kühlschrank"], "price": 1500, "popular": false },
+    { "name": "Mercedes E-Klasse", "type": "Business-Limousine", "passengers": "1-3", "luggage": "3", "features": ["WLAN", "Klima", "USB-Ladung", "Wasser"], "price": 650, "popular": false }
+  ],
+  "routes": {
+    "badge": "Festpreise",
+    "title": "Beliebte",
+    "titleHighlight": "Routen",
+    "subtitle": "Alle unsere Preise sind fest. Keine Verkehrs- oder Wartegebühren.",
+    "startingFrom": "Ab"
+  },
+  "routeList": [
+    { "from": "Flughafen Antalya", "to": "Kaleiçi (Altstadt)", "distance": "15 km", "duration": "20 Min", "price": 650 },
+    { "from": "Flughafen Antalya", "to": "Belek", "distance": "35 km", "duration": "30 Min", "price": 850 },
+    { "from": "Flughafen Antalya", "to": "Kemer", "distance": "60 km", "duration": "50 Min", "price": 1100 },
+    { "from": "Flughafen Antalya", "to": "Side", "distance": "75 km", "duration": "60 Min", "price": 1300 },
+    { "from": "Flughafen Antalya", "to": "Alanya", "distance": "130 km", "duration": "90 Min", "price": 1800 },
+    { "from": "Flughafen Antalya", "to": "Kaş", "distance": "190 km", "duration": "150 Min", "price": 2500 },
+    { "from": "Flughafen Antalya", "to": "Lara", "distance": "12 km", "duration": "15 Min", "price": 550 },
+    { "from": "Flughafen Antalya", "to": "Kundu", "distance": "18 km", "duration": "20 Min", "price": 650 }
+  ],
+  "reviews": {
+    "badge": "Kundenzufriedenheit",
+    "title": "Was unsere Gäste",
+    "titleHighlight": "sagen"
+  },
+  "reviewList": [
+    { "name": "Michael Schmidt", "country": "Deutschland", "text": "Wunderbare Erfahrung. Der Fahrer kam pünktlich, das Auto war blitzsauber und sehr komfortabel. Werde es definitiv wieder nutzen.", "source": "Google" },
+    { "name": "Elena Petrova", "country": "Russland", "text": "Sehr komfortabler Transfer. Der Fahrer empfing uns mit einem Namensschild und half mit dem Gepäck. Sehr empfehlenswert!", "source": "Tripadvisor" },
+    { "name": "James Wilson", "country": "Großbritannien", "text": "Bester Flughafentransfer in Antalya. Saubere Mercedes V-Klasse, professioneller Fahrer, fairer Preis.", "source": "Google" },
+    { "name": "Ayşe Demir", "country": "Türkei", "text": "Wir sind mit der Familie nach Belek gefahren. Die V-Klasse war sehr komfortabel, Kindersitz wurde auch gestellt.", "source": "Google" },
+    { "name": "Hans Müller", "country": "Österreich", "text": "Pünktlich, sauber und professionell. Der Fahrer war sehr freundlich. Klare Empfehlung!", "source": "Tripadvisor" },
+    { "name": "Sophie Martin", "country": "Frankreich", "text": "Tadelloser Service von Anfang bis Ende. Der Fahrer war pünktlich und sehr hilfsbereit. Sehr empfehlenswert!", "source": "Google" }
+  ],
+  "faq": {
+    "badge": "Ihre Fragen",
+    "title": "Häufig gestellte",
+    "titleHighlight": "Fragen"
+  },
+  "faqList": [
+    { "q": "Wie empfangen Sie mich am Flughafen?", "a": "Unser Fahrer empfängt Sie am Ankunftsgate mit einem Namensschild. Ihr Flug wird verfolgt, bei Verspätungen wird kostenlos gewartet." },
+    { "q": "Gibt es versteckte Gebühren?", "a": "Nein. Alle Preise sind fest und beinhalten Kraftstoff, Parkgebühren und MwSt. Keine Verkehrs- oder Wartegebühren." },
+    { "q": "Ist kostenlose Stornierung möglich?", "a": "Ja. Sie können bis 24 Stunden vor der Transferzeit kostenlos stornieren." },
+    { "q": "Bieten Sie Kindersitze an?", "a": "Ja. Teilen Sie es uns bei der Buchung mit. Kindersitze für 0-12 Jahre werden kostenlos bereitgestellt." },
+    { "q": "Wie kann ich bezahlen?", "a": "Wir akzeptieren Kreditkarten, Bargeld (TRY, EUR, USD, GBP) oder Online-Zahlung. POS-Gerät im Fahrzeug verfügbar." },
+    { "q": "Fahren Sie auch spät nachts?", "a": "Ja, wir sind 24/7 erreichbar. Kein Aufpreis für Nacht- oder Frühtransfers." },
+    { "q": "Welche Fahrzeuggrößen haben Sie?", "a": "Limousinen für 1-3 Personen, VIP-Minivans für 1-7 Personen und VIP-Kleinbusse für 1-12 Personen." }
+  ],
+  "footer": {
+    "desc": "Antalyas vertrauenswürdigster VIP-Transfer-Service. Luxusfahrzeuge, professionelle Fahrer, Festpreise.",
+    "licensed": "Lizenziertes Tourismus-Transferunternehmen",
+    "quickLinks": "Schnelllinks",
+    "popularRoutes": "Beliebte Routen",
+    "contactTitle": "Kontakt",
+    "copyright": "© 2026 Antalya VIP Transfer. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen"
+  },
+  "mobile": {
+    "startingFrom": "Ab",
+    "bookNow": "Jetzt buchen"
+  }
+}

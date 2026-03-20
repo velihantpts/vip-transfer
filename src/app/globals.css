@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --base: #FFFFFF;
+  --surface: #F5F5F7;
+  --primary: #0071E3;
+  --primary-dark: #0058B0;
+  --text: #1D1D1F;
+  --text-secondary: #86868B;
+  --text-tertiary: #AEAEB2;
+  --border: #D2D2D7;
+  --border-light: #E8E8ED;
+  --emerald: #34C759;
+  --card-bg: #FFFFFF;
+  --card-border: #E8E8ED;
+  --inverse: #1D1D1F;
+  --inverse-text: #F5F5F7;
+  --footer-bg: #F5F5F7;
+  --cta-bg: #1D1D1F;
+  --cta-text: #FFFFFF;
+  --cta-btn-bg: #FFFFFF;
+  --cta-btn-text: #1D1D1F;
+}
+
+.dark {
+  --base: #000000;
+  --surface: #1C1C1E;
+  --primary: #0A84FF;
+  --primary-dark: #409CFF;
+  --text: #F5F5F7;
+  --text-secondary: #98989D;
+  --text-tertiary: #7C7C80;
+  --border: #38383A;
+  --border-light: #2C2C2E;
+  --emerald: #30D158;
+  --card-bg: #1C1C1E;
+  --card-border: #2C2C2E;
+  --inverse: #F5F5F7;
+  --inverse-text: #1D1D1F;
+  --footer-bg: #1C1C1E;
+  --cta-bg: #1C1C1E;
+  --cta-text: #F5F5F7;
+  --cta-btn-bg: #0A84FF;
+  --cta-btn-text: #FFFFFF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-text: var(--text);
+  --color-secondary: var(--text-secondary);
+  --color-tertiary: var(--text-tertiary);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-emerald: var(--emerald);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-inverse: var(--inverse);
+  --color-inverse-text: var(--inverse-text);
+  --color-footer-bg: var(--footer-bg);
+  --color-cta-bg: var(--cta-bg);
+  --color-cta-text: var(--cta-text);
+  --color-cta-btn-bg: var(--cta-btn-bg);
+  --color-cta-btn-text: var(--cta-btn-text);
+  --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--base);
+  color: var(--text);
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, background-color 0.3s ease;
+}
+.card:hover { border-color: var(--border); }
+
+/* Focus ring for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+::-webkit-scrollbar { width: 0; }
+html { scroll-behavior: smooth; }
+::selection { background: rgba(0,113,227,0.12); }
