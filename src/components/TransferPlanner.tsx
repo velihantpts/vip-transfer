@@ -91,38 +91,45 @@ export default function TransferPlanner({ selectedRoute, onRouteConsumed }: Tran
   }, [originId]);
 
   return (
-    <section id="rotalar" className="py-24">
-      <div className="max-w-[1080px] mx-auto px-6">
+    <section id="rotalar" className="pt-20 pb-24 bg-surface">
+      {/* Premium header */}
+      <div className="max-w-[980px] mx-auto px-6 mb-10">
         <FadeIn className="text-center mb-8">
+          <p className="text-primary text-xs font-medium tracking-widest uppercase mb-3">Rotalar & Fiyatlar</p>
           <h2 className="text-3xl sm:text-4xl font-semibold text-text tracking-tight">
-            Transfer <span className="text-secondary">Planlayıcı</span>
+            Transfer <span className="text-secondary">Planlayici</span>
           </h2>
-          <p className="text-secondary mt-3 text-sm">Başlangıç noktanızı seçin, haritadan destinasyon belirleyin.</p>
+          <p className="text-secondary mt-3 text-sm max-w-md mx-auto">Baslangic noktanizi secin, haritadan veya listeden destinasyon belirleyin.</p>
         </FadeIn>
 
-        {/* Origin selector */}
-        <FadeIn delay={0.1} className="max-w-md mx-auto mb-8">
-          <div className="flex items-center gap-2">
-            <div className="flex-1">
-              <label className="text-[10px] text-tertiary uppercase tracking-wider mb-1 block">Başlangıç Noktası</label>
-              <select
-                value={originId}
-                onChange={(e) => { setOriginId(e.target.value); setSelectedDestId(null); }}
-                className="w-full bg-card-bg border border-card-border rounded-xl px-4 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20"
-              >
-                {Object.entries(
-                  points.reduce((acc, p) => {
-                    const label = p.type === "airport" ? "Havalimanı" : p.type === "district" ? "Bölgeler" : p.type === "hotel" ? "Oteller" : "Gezilecek Yerler";
-                    if (!acc[label]) acc[label] = [];
-                    acc[label].push(p);
-                    return acc;
-                  }, {} as Record<string, typeof points>)
-                ).map(([group, pts]) => (
-                  <optgroup key={group} label={group}>
-                    {pts.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-                  </optgroup>
-                ))}
-              </select>
+        {/* Origin selector — premium card */}
+        <FadeIn delay={0.1} className="max-w-lg mx-auto">
+          <div className="bg-card-bg border border-border-light rounded-2xl p-5 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <label className="text-[10px] text-tertiary uppercase tracking-wider mb-1 block">Baslangic Noktasi</label>
+                <select
+                  value={originId}
+                  onChange={(e) => { setOriginId(e.target.value); setSelectedDestId(null); }}
+                  className="w-full bg-surface border border-border-light rounded-xl px-4 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+                  {Object.entries(
+                    points.reduce((acc, p) => {
+                      const label = p.type === "airport" ? "Havalimani" : p.type === "district" ? "Bolgeler" : p.type === "hotel" ? "Oteller" : "Gezilecek Yerler";
+                      if (!acc[label]) acc[label] = [];
+                      acc[label].push(p);
+                      return acc;
+                    }, {} as Record<string, typeof points>)
+                  ).map(([group, pts]) => (
+                    <optgroup key={group} label={group}>
+                      {pts.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </FadeIn>

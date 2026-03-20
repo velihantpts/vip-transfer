@@ -79,11 +79,8 @@ export default function Hero({ dict, onRouteSelect }: HeroProps) {
 
   return (
     <section className="relative min-h-[90vh] flex items-center" id="rezervasyon">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=1920&h=1080&fit=crop&q=80')" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/75 to-[#0a1628]/95" />
-      </div>
+      {/* Background — solid dark gradient, no image */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0a1628] via-[#0f1d32] to-[#0a1628]" />
 
       <div className="relative z-10 w-full max-w-[980px] mx-auto px-6 py-28">
         <div className="text-center mb-12">
